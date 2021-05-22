@@ -26,9 +26,9 @@ def connDB():
     # MySQL configurations
     #app.config['MYSQL_DATABASE_USER'] = 'root'
     #app.config['MYSQL_DATABASE_PASSWORD'] = ''
-    app.config['MYSQL_DATABASE_USER'] = 'dashboard'
-    app.config['MYSQL_DATABASE_PASSWORD'] = 'aisoh-Wae<P4'
-    app.config['MYSQL_DATABASE_DB'] = 'gpsTrack'
+    app.config['MYSQL_DATABASE_USER'] = 'coneicc'
+    app.config['MYSQL_DATABASE_PASSWORD'] = 'coneicc'
+    app.config['MYSQL_DATABASE_DB'] = 'dashboard'
     app.config['MYSQL_DATABASE_PORT'] = 3306
     app.config['MYSQL_DATABASE_HOST'] = 'localhost'
     mysql.init_app(app)
@@ -132,6 +132,7 @@ def saveIntervalAction():
 def getNickname():
     conn = connDB()
     x = conn.cursor()
+    #print("select u.nickname,u.cellPhone, if (( select gps.timeStamp from gpshistory gps where u.cellPhone = gps.cellphone  and DATE_ADD(NOW(), INTERVAL -3 MINUTE) <= gps.timeStamp ORDER BY gps.timeStamp asc limit 1) <> '',1,0) as status from users u where u.groupValue='"+request.form['group']+"' group by nickname,cellPhone,status")
     x.execute("select u.nickname,u.cellPhone, if (( select gps.timeStamp from gpshistory gps where u.cellPhone = gps.cellphone  and DATE_ADD(NOW(), INTERVAL -3 MINUTE) <= gps.timeStamp ORDER BY gps.timeStamp asc limit 1) <> '',1,0) as status from users u where u.groupValue='"+request.form['group']+"' group by nickname,cellPhone,status")
     data=x.fetchall()
     finalResult=[]

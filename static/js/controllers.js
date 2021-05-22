@@ -208,9 +208,11 @@
                             alert('No existen registros con estos filtros!')
                         } else {
                             $.each(info, function(i, item) {
-                                var marker1 = L.marker([item.lat, item.lon], { color: '#ffffff' }).bindPopup(item.nickname);
-                                $scope.assetLayerGroup.addLayer(marker1);
-                                $scope.assetLayerGroup.addTo(mymap);
+                                //var marker1 = L.marker([item.lat, item.lon], { color: '#ffffff' }).bindPopup(item.nickname);
+                                var marker1 = new mapboxgl.Marker()
+                                .setLngLat([item.lon,item.lat]).addTo(mymap);
+                                //$scope.assetLayerGroup.addLayer(marker1);
+                                //$scope.assetLayerGroup.addTo(mymap);
                             });
                         }
 
