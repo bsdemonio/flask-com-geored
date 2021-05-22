@@ -18,6 +18,7 @@
                 $scope.listUsersInfo = null;
                 $scope.dateFilterTab = null;
                 $scope.assetLayerGroup = new L.LayerGroup();
+                $scope.markers = []
 
                 $.ajax({
                     url: '/getGroups',
@@ -108,6 +109,9 @@
                     $('#nicknameFilter').val('')
                     $('#startTimeMap').val('')
                     $('#endTimeMap').val('')
+                    for (var i = $scope.markers.length - 1; i >= 0; i--) {
+                        $scope.markers[i].remove();
+                    }
                 }
                 $scope.dashboard = function() {
                     $scope.filtersData = "block;";
@@ -209,8 +213,12 @@
                         } else {
                             $.each(info, function(i, item) {
                                 //var marker1 = L.marker([item.lat, item.lon], { color: '#ffffff' }).bindPopup(item.nickname);
+                                var popup = new mapboxgl.Popup()
+                                  .setText(item.nickname)
+                                  .addTo(mymap);
                                 var marker1 = new mapboxgl.Marker()
-                                .setLngLat([item.lon,item.lat]).addTo(mymap);
+                                .setLngLat([item.lon,item.lat]).addTo(mymap).setPopup(popup);
+                                $scope.markers.push(marker1)
                                 //$scope.assetLayerGroup.addLayer(marker1);
                                 //$scope.assetLayerGroup.addTo(mymap);
                             });
